@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Streaming With Node</title>
+  <style>
+    body {
+      max-width: 100%;
+      height: 100vh;
+      background-color: rgb(14, 14, 14);
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+
+<body>
+  <div>
+    <video id="videoPlayer" width="70%" controls autoplay muted="false"></video>
+
+  </div>
+  <br />
+  <br />
+  <br />
+
+  <div>
+    <video id="videoPlayerUrl" width="70%" controls autoplay muted="false"></video>
+  </div>
+
+  <script>
+    if (Hls.isSupported()) {
+      var video = document.getElementById('videoPlayer');
+      var hls = new Hls();
+      hls.loadSource('http://localhost:3000/hls/index.m3u8');
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        video.play();
+      });
+    }
+
+    if (Hls.isSupported()) {
+      var video = document.getElementById('videoPlayerUrl');
+      var hls = new Hls();
+      hls.loadSource('http://localhost:3000/video/index.m3u8');
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        video.play();
+      });
+    }
+  </script>
+</body>
+
+</html>
